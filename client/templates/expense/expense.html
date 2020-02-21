@@ -1,0 +1,25 @@
+
+<div class="mainbody" ng-controller="ExpenseCtrl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="row header">
+                   <div class="col-md-6 text-left">My Expenses</div>
+                   <div class="col-md-6 text-right"><button type="button" class="btn btn-outline-secondary btn-sm"  data-toggle="modal" data-target="#expenseModal" ng-click="newExpenseForm()">New Expense</button></div>
+                </div>
+                <div ng-repeat = "expense in expenses | orderBy:'-date'">
+                    <div class="row list" id="item">
+                       <div class="col-md-1 text-center"><div class="list-sec">{{expense.date | date:'MMM' }}</div><div class="list-pri">{{expense.date | date:'dd' }}</div></div>
+                       <div class="col-md-6 text-left"><div class="list-pri"><span class="item_category" ng-click="loadExpenseForm(expense)">{{expense.category}}</span></div><div class="list-sec">{{expense.description}}</div></div>
+                       <div class="col-md-4 text-right"><div class="list-pri">{{expense.amount}}</div><div class="list-sec">{{expense.currency}}</div></div>
+                       <div class="col-md-1" id="delete" ng-click="deleteExpense(expense)"><i class="fas fa-trash fa-sm"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-options="options"></canvas>
+            </div>
+        </div>
+    </div>
+    <div ng-include="'templates/expense/expense-form.html'"></div>
+</div>

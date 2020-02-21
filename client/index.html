@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Smart Personal Finance Manager</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/table.css">
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="lib/bootstrap-notify.min.js"></script>
+  <script src="lib/bootstrap-confirmation.min.js"></script>
+
+  <script src="lib/angular.min.js"></script>
+  <script src="lib/angular-resource.min.js"></script>
+  <script src="lib/angular-route.min.js"></script>
+  <script src="lib/fontawesome-all.js"></script>
+
+  <script src="lib/Chart.min.js"></script>
+  <script src="lib/angular-chart.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/app_expense.js"></script>
+</head>
+
+<body ng-app="myApp">
+<div class="sidebar">
+    <ul>
+     <li><a href="#">Dashboard</a></li>
+     <li><a href="#">Recent Activities</a></li>
+     <li><a href="#">Categories</a></li>
+     <br>
+     <li><a href="#!expense">Expenses</a></li>
+     <li><a href="#">Incomes</a></li>
+     <li><a href="#">Assets</a></li>
+     <li><a href="#">Borrowings</a></li>
+     <li><a href="#">Lendings</a></li>
+     <li><a href="#">Investments</a></li>
+     <li><a href="#">Expense-Streams</a></li>
+     <br>
+     <li><a href="#">To do lists</a></li>
+     <li><a href="#">My Diary</a></li>
+     <br>
+     <li><a href="#">Logout</a></li>
+    </ul>
+</div>
+
+<div ng-view></div>
+
+</body>
+</html>

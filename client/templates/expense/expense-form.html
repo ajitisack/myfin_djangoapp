@@ -1,0 +1,54 @@
+<div class="modal fade" id="expenseModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h6 class="modal-title">{{title}} Expense</h6>
+        <button type="button" class="close" data-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <form ng-submit="updateExpense(expense)" name="expenseForm" novalidate>
+          <div class="modal-body">
+              <div class="form-row">
+                  <div class="form-group col-md-4">
+                      <select class="form-control form-control-sm" id="category" ng-model="expense.category" required>
+                        <option>General</option>
+                        <option>Eating Outside</option>
+                        <option>Travel</option>
+                        <option>Groceries</option>
+                        <option>Others</option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-8">
+                   <input type="text" class="form-control form-control-sm" id="description" ng-model="expense.description" placeholder="Description" required>
+                  </div>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-4">
+                      <input type="date" class="form-control form-control-sm" id="date" ng-model="expense.date" required>
+                  </div>
+                  <div class="form-group col-md-3">
+                        <select class="form-control form-control-sm" id="currency" ng-model="expense.currency" required>
+                          <option selected>MYR</option>
+                          <option>INR</option>
+                          <option>USD</option>
+                        </select>
+                  </div>
+                  <div class="form-group col-md-5">
+                      <input type="number" min=0.01 max=10000000000.00 class="form-control form-control-sm" id="amount" ng-model="expense.amount" placeholder="0.00" required>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+              <button type="submit" class="btn btn-primary btn-sm" ng-disabled="expenseForm.$invalid">Save</button>
+              <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+          </div>
+      </form>
+
+    </div>
+  </div>
+</div>

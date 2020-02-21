@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Smart Personal Finance Manager</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/table.css">
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/popper.min.js"></script>
+  <script src="lib/bootstrap.min.js"></script>
+  <script src="lib/Chart.min.js"></script>
+  <script src="lib/angular.min.js"></script>
+  <script src="lib/angular-resource.min.js"></script>
+  <script src="lib/angular-route.min"></script>
+  <script src="lib/fontawesome-all.js"></script>
+  <script src="js/table.app.js"></script>
+  <script src="js/table.chart.js"></script>
+</head>
+<body>
+
+
+<div class="sidebar">
+    <ul>
+     <li><a href="#">Dashboard</a></li>
+     <li><a href="#">Recent Activities</a></li>
+     <li><a href="#">Categories</a></li>
+     <li><a href="#">Expenses</a></li>
+     <li><a href="#">Incomes</a></li>
+     <li><a href="#">Assets</a></li>
+     <li><a href="#">Borrowings</a></li>
+     <li><a href="#">Lendings</a></li>
+     <li><a href="#">Investments</a></li>
+     <li><a href="#">Expense-Streams</a></li>
+     <li><a href="#">Diary</a></li>
+    </ul>
+</div>
+
+<div class="mainbody" ng-app="myApp" ng-controller="myCtrl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="row header">
+                   <div class="col-md-6 text-left">My Expenses</div>
+                   <div class="col-md-6 text-right"><button type="button" class="btn btn-outline-secondary btn-sm"  data-toggle="modal" data-target="#expenseModal">New Expense</button></div>
+                </div>
+                <div ng-repeat = "expense in expenses | orderBy:'-date'">
+                    <div class="row list" id="item">
+                       <div class="col-md-1 text-center"><div class="list-sec">{{expense.date | date:'MMM' }}</div><div class="list-pri">{{expense.date | date:'dd' }}</div></div>
+                       <div class="col-md-6 text-left"><div class="list-pri">{{expense.category}} <i class="fas fa-edit fa-sm edit" ng-click="loadExpenseForm(expense)"></i></div><div class="list-sec">{{expense.description}}</div></div>
+                       <div class="col-md-4 text-right"><div class="list-pri">{{expense.amount}}</div><div class="list-sec">{{expense.currency}}</div></div>
+                       <div class="col-md-1" id="delete"><i class="fas fa-trash fa-sm" ng-click="deleteExpense(expense)"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+               <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="expenseModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h6 class="modal-title">{{title}} Expense</h6>
+            <button type="button" class="close" data-dismiss="modal"></button>
+          </div>
+
+          <!-- Modal body -->
+          <form ng-submit="updateExpense(expense)" id="expenseForm">
+              <div class="modal-body">
+                  <div class="form-row">
+                      <div class="form-group col-md-4">
+                          <select class="form-control form-control-sm" id="category" ng-model="expense.category">
+                            <option>General</option>
+                            <option>Eating Outside</option>
+                            <option>Travel</option>
+                            <option>Groceries</option>
+                            <option>Others</option>
+                          </select>
+                      </div>
+                      <div class="form-group col-md-8">
+                       <input type="text" class="form-control form-control-sm" id="description" ng-model="expense.description" placeholder="Description">
+                      </div>
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group col-md-4">
+                          <input type="date" class="form-control form-control-sm" id="date" ng-model="expense.date" value="'{{date}}'">
+                      </div>
+                      <div class="form-group col-md-3">
+                            <select class="form-control form-control-sm" id="currency" ng-model="expense.currency">
+                              <option selected>MYR</option>
+                              <option>INR</option>
+                              <option>USD</option>
+                            </select>
+                      </div>
+                      <div class="form-group col-md-5">
+                          <input type="text" class="form-control form-control-sm" id="amount" ng-model="expense.amount" placeholder="0.00">
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                  <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+              </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+</div>
+
+</body>
+</html>

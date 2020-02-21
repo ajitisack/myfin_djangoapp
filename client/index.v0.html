@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl" ng-init="getAllExpenses()">
+        <p>{{message}}</p>
+        <p>New Expense:</p>
+        <form ng-submit="addExpense()">
+                Category : <input type="text" class="form-control" id="category" ng-model="category"/>
+                Amount : <input type="text" class="form-control" id="amount" ng-model="amount"/>
+                <input type="submit" class="btn btn-primary" value="Save"/>
+        </form>
+        <br>
+        <p>Expenses:</p>
+        <div ng-repeat = "e in expenses">
+                <h5>{{ e.category + '-' + e.amount }}<button ng-click="updateExpense(e.id, e.category, e.amount)">Edit</button><button ng-click="deleteExpense(e.id)">Delete</button></h5>
+        </div>
+        <h4>{{error}}</h4>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+var url = "http://127.0.0.1:8000/expenses/"
+app.controller('myCtrl', function($scope, $http, ExpenseCRUDService) {
+        $scope.getAllExpenses = function(){
+            ExpenseCRUDService.getAllExpenses()
+              .then(function (response){
+                  $scope.expenses = response.data;
+            });
+        }
+        $scope.addExpense = function(){
+            ExpenseCRUDService.addExpense($scope.category, $scope.amount, $scope.currency, $scope.date, $scope.description,)
+        }
+        $scope.updateExpense = function(id, category, amount){
+                $scope.category = category
+                $scope.amount = amount
+                ExpenseCRUDService.addExpense(id, $scope.category, $scope.amount)
+        }
+        $scope.deleteExpense = function(id){
+            ExpenseCRUDService.deleteExpense(id)
+        }
+});
+
+app.service('ExpenseCRUDService',['$http', function ($http) {
+    this.getAllExpenses = function getAllExpenses(){
+        return $http({
+                method : 'GET',
+                url    : url
+        });
+    }
+    this.deleteExpense = function deleteExpense(id){
+        return $http({
+                method : 'DELETE',
+                url    : url + id + '/'
+        })
+    }
+    this.addExpense = function addExpense(category, amount, currency, date, description){
+        return $http({
+          method : 'POST',
+          url    : url,
+          data   : {category:category, amount:amount, currency:currency, date:date, description:description}
+        });
+    }
+    this.updateExpense = function updateExpense(id,category,amount){
+        return $http({
+          method : 'PATCH',
+          url    : url + id,
+          data   : {category:category, amount:amount}
+        })
+    }
+}]);
+
+</script>
+
+</body>
+</html>
